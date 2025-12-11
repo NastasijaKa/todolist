@@ -1,0 +1,41 @@
+.task {
+  margin: 0;
+  display: flex;
+  width: 97%;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 10px;
+  background: #6495ed;
+  border-radius: 10px;
+  align-items: center;
+}
+
+.task__checkbox {
+  width: 30px;
+  height: 30px;
+}
+
+.task__but {
+  background: url(../../images/delete.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+}
+
+.task__buttons {
+  width: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task__but:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.task_active {
+  background-color: #2e8b57;
+}
