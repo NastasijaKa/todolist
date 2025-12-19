@@ -1,59 +1,95 @@
-import './App.css';
-import { useState, useEffect, use } from 'react';
-import Todolist from './Todolist/Todolist.js'
+import React, { useState } from "react";
+import "./App.css";
+
 function App() {
-  const [inputValue, setInputValue] = useState('')
-  const [tasks, setTasks] = useState([])
-  const [tasksFilter, setTasksFilter]= useState([])
-  const [isActiveTasks, setIsActiveTasks] = useState(false)
-  const [countTasks, setCountTasks] = useState(0)
-  const handleClickAddTask = (e) => {
-    const randomId = Math.random().toString(36).substring(2, 8);
-    inputValue && setTasks([{text: inputValue, isActive: false, id:randomId }, ...tasks])
-  }
-  const handleClickDeleteTask = (id) => {
-    const tasksNew = tasks.filter((item) => item.id!==id)
-    setTasks(tasksNew)
-  }
-  const changeActiveTask = (id) =>{
-    const newTasks= tasks.map((item) => {
-      if (item.id === id){
-        return {...item, isActive:!item.isActive}
-      }
-      return item
-    })
-    setTasks(newTasks)
-  }
+  const [todos, setTodos] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [filter, setFilter] = useState("all");
 
-  const handleSaveTasks = (e) => {
-    e.preventDefault();
-    localStorage.setItem('tasks', JSON.stringify(tasks))
-  } 
+  const addTodo = () => {
+    const newTodo = {
+      id: Date.now(),
+      text: inputValue,
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+    setInputValue("");
+  };
 
-  useEffect(()=>{
-    let newTasks = [...tasks]
-    if (isActiveTasks){
-      newTasks = newTasks.filter((item)=>item.isActive === true)
-    }
-    setCountTasks(newTasks.filter((item)=>item.isActive === false).length)
-    setTasksFilter(newTasks)
-  }, [tasks, isActiveTasks])
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
-  useEffect(()=>{
-    setTasks(JSON.parse(localStorage.getItem('tasks') || '[]'))
-  }, [])
+  const toggleTodo = (id) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      })
+    );
+  };
+
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
+    return true;
+  });
+
+  const activeCount = todos.filter((todo) => !todo.completed).length;
+
   return (
-    <div className="App">
-      <div className='menu'>
-        <input className='menu__input' value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
-        <div className='menu__buttons'>
-          <button className='menu__but' onClick={handleClickAddTask}>Добавить</button>
-          <button className={isActiveTasks ? `menu__but menu__but_back menu__but_active` : `menu__but menu__but_back`} onClick={(e)=>{setIsActiveTasks(!isActiveTasks)}}>Выполненныe</button>
-          <button className='menu__but menu__but_save' onClick={handleSaveTasks}>Сохранить</button>
-        </div>
+    <div className="app">
+      <h1>Список Задач</h1>
+
+      <div className="input-area">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Новая задача"
+        />
+        <button onClick={addTodo}>Добавить</button>
       </div>
-      <p className='menu__count'>Осталось задач: {countTasks}</p>
-      <Todolist handleClickDeleteTask={handleClickDeleteTask} changeActiveTask={changeActiveTask} tasks={tasksFilter}/>
+
+      <div className="filters">
+        <button
+          onClick={() => setFilter("all")}
+          className={filter === "all" ? "active" : ""}
+        >
+          Все
+        </button>
+        <button
+          onClick={() => setFilter("active")}
+          className={filter === "active" ? "active" : ""}
+        >
+          Активные
+        </button>
+        <button
+          onClick={() => setFilter("completed")}
+          className={filter === "completed" ? "active" : ""}
+        >
+          Выполненные
+        </button>
+        <span className="counter">Осталось: {activeCount}</span>
+      </div>
+
+      <div className="todo-list">
+        {filteredTodos.map((todo) => (
+          <div key={todo.id} className="todo-item">
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => toggleTodo(todo.id)}
+            />
+            <span className={todo.completed ? "completed" : ""}>
+              {todo.text}
+            </span>
+            <button onClick={() => deleteTodo(todo.id)}>X</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

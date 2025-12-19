@@ -1,54 +1,113 @@
-.App {
+.app {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f8f7ff;
+  border-radius: 20px;
+}
+
+h1 {
   text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
+  color: #6d5dfc;
 }
 
-.menu {
-  margin: 0 auto;
-  padding-top: 100px;
-  max-width: 800px;
+.input-area {
   display: flex;
-  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.menu__input {
-  width: 60%;
-  height: 40px;
-  font-size: 20px;
+.input-area input {
+  flex: 1;
+  padding: 12px;
+  margin-right: 10px;
+  border: 2px solid #b8b5ff;
+  border-radius: 20px;
+  background: #ffffff;
+  font-size: 16px;
 }
 
-.menu__buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 38%;
-  margin-bottom: 50px;
-}
-
-.menu__but {
-  background: burlywood;
-  font-weight: 700;
-  border-radius: 5px;
-  height: 40px;
-}
-
-.menu__but:hover {
-  opacity: 0.8;
-  cursor: pointer;
-}
-
-.menu__but_back {
-  background: green;
-}
-
-.menu__but_save {
-  background-color: aqua;
-}
-
-.menu__but_active {
-  opacity: 0.5;
-}
-
-.menu__count {
+.input-area button {
+  padding: 12px 20px;
+  background: #6d5dfc;
   color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.input-area button:hover {
+  background: #5b4ee0;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filters button {
+  padding: 8px 16px;
+  border: 2px solid #a5b4fc;
+  background: #e0e7ff;
+  color: #4f46e5;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.filters button.active {
+  background: #6d5dfc;
+  color: white;
+  border-color: #6d5dfc;
+}
+
+.counter {
+  margin-left: auto;
+  font-weight: bold;
+  color: #4f46e5;
+  background: #e0e7ff;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+.todo-list {
+  margin-top: 20px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 2px solid #c7d2fe;
+  margin-bottom: 10px;
+  background: white;
+  border-radius: 15px;
+}
+
+.todo-item input {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.todo-item button {
+  margin-left: auto;
+  background: #f472b6;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+.todo-item button:hover {
+  background: #ec4899;
 }
